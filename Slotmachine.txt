@@ -1,0 +1,104 @@
+/*
+Authors:  Don & Youseuf
+Date: Fri, April 8th 2016
+Filename: Slot Machine
+Description: This program simulates a slot machine in which three 
+numbers between 0 and 9 are randomly generated and printed side by side.
+If the numbers are the same, coins are added to the total. If none of the
+numbers are the same, the coins waged are taken away from the total
+*/
+
+class SlotMachine
+{
+  public static void main (String[] args)
+  {
+    /* totalCoins repersents the coins that the player starts with, and is the total number of coins 
+       remaining after each play 
+    */
+    int totalCoins=1000;    
+    /* wager repersents the amount of coins that the player wants to bid, this amount is then added or 
+       deducted depending on the numbers  generated
+    */
+    int wager; 
+    System.out.println("Slot Machine");
+    System.out.println("You have 1000 coins.");
+    
+    /*This is the main loop of the program, it checks if the total number of coins is equal to 
+     0, and if the wager is equal to 0. If one of those expressions is not true, then the program will exit the main
+     loop and end 
+    */
+    do
+    {
+      /* generatedNumbers stores the all three of the randomly generated numbers (from 0-9)
+          these numbers determine whether coins are added or taken away from the total amount of coins.
+          The values for the generated numbers gets reset after each play*/
+      String generatedNumbers="";
+      
+      System.out.println("Press 0 to exit, any other number to play that many coins per spin.");
+      
+      /*This loop checks if the wager is less than 0 and if the wager is greater than the total number of coins. 
+        The program will exit the loop if the wager is equal to 0, if the wager is below or equal to the total 
+        number of coins and if the wager is not a negative number 
+      */
+      do
+      {
+        wager = In.getInt();
+        //If the wager is greater than the total number of coins than the following if statement will be executed 
+        if (wager>totalCoins)
+          System.out.println("You Wager is greater than the number of coins you have");
+        //If the wager is less than the 0 than the following if statement will be executed 
+        else if (wager<0)
+          System.out.println("Please enter a number that is equal to zero or higher.");
+      }
+      while (wager>totalCoins || wager<0);
+      
+      // If the wager is in between 0 and total number of coins than this "if" statement will be excueted  
+      if (wager<=totalCoins && wager!=0)
+      {
+        
+        // The variable generatedNumber stores 3 random numbers (from 0-9), which are than collected as String variable.      
+        for (int i =0;i<3; ++i)
+        {
+          generatedNumbers+=(int)(Math.random()*10)+" ";          
+        }
+        System.out.println(generatedNumbers);
+        /* By using the .charAt the generated numbers are placed at a specific positions on the same line.
+          If all three of the numbers are the same than the following if statement will be true and the wager 
+          will be multpilied by 100 and than added to the total number of coins the player has.
+        */
+        if (generatedNumbers.charAt(0)==generatedNumbers.charAt(2) && generatedNumbers.charAt(0)==generatedNumbers.charAt(4))
+        {
+            totalCoins+=wager*100;
+            System.out.println("You won "+(wager*100)+"!"+"You now have "+totalCoins+" coins.");
+            
+          }
+        /*If 2 of the numbers are the same than the following if statement will be true and the wager 
+         will be multpilied by 10 and than added to the total number of coins the player has.
+        */
+        else if (generatedNumbers.charAt(0)==generatedNumbers.charAt(2) || generatedNumbers.charAt(0)==generatedNumbers.charAt(4) 
+                 || generatedNumbers.charAt(2)==generatedNumbers.charAt(4))
+          {
+            totalCoins+=wager*10;
+            System.out.println("You won "+(wager*10)+"!"+"You now have "+totalCoins+" coins.");
+            
+          }
+          /*If none of the numbers are the same than the following else statement will excute and total amount of coins 
+           the player has will be deducted by the amount bid. 
+          */
+          else
+          {
+            totalCoins-=wager;
+            System.out.println("You lost "+(wager)+"!"+"You now have "+totalCoins+" coins.");
+             //If the player has 0 total coins left than the program will print out the following print statement. 
+            if (totalCoins==0)
+              System.out.println("You have no more coins left");
+            
+          }
+          
+      }
+      
+    }
+    // If the wager or total number of coins is equal to zero than the program will exit the main loop.
+    while(wager!=0 && totalCoins!=0);
+  }
+}
